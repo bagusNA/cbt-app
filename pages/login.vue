@@ -13,10 +13,10 @@
         
         <form action="#" method="post" class="flex flex-col gap-y-4">
           <input type="text" name="username" placeholder="Username"
-            class="px-4 py-3 rounded-xl text-background border border-secondary transition hover:border-background focus:border-background"
+            class="px-4 py-3 rounded-xl text-background border border-secondary transition hover:border-background focus:border-background focus:outline focus:outline-2 focus:outline-background"
           >
           <input type="password" name="password" placeholder="Password"
-            class="px-4 py-3 rounded-xl text-background border border-secondary transition hover:border-background focus:border-background"
+            class="px-4 py-3 rounded-xl text-background border border-secondary transition hover:border-background focus:border-background focus:outline focus:outline-2 focus:outline-background"
           >
 
           <div>
