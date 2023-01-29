@@ -1,6 +1,36 @@
 <script setup lang="ts">
 const { data } = await useFetch('/api/login')
 
+const form = reactive({
+  data: {
+    username: '',
+    password: '',
+  },
+  error: '',
+  pending: false,
+})
+
+const submit = async () => {
+  try {
+    form.error = ''
+    form.pending = true
+
+    await useFetch('/api/login', {
+      method: 'POST',
+      body: {...form.data}
+    })
+  }
+  catch (error: any) {
+    console.error(error)
+
+    if (error.data.message)
+      form.error = error.data.message
+  }
+  finally {
+    form.pending = false
+  }
+}
+
 onMounted(() => {
   console.log(data.value)
 })
@@ -16,11 +46,17 @@ onMounted(() => {
           <Icon name="ph:star-four-fill" class="text-4xl absolute top-8 -left-14 animate-fade" />
         </div>
         
-        <form action="#" method="post" class="flex flex-col gap-y-4">
-          <input type="text" name="username" placeholder="Username"
+        <form @submit.prevent="submit" class="flex flex-col gap-y-4">
+          <input v-model="form.data.username"
+            type="text"
+            name="username"
+            placeholder="Username"
             class="px-4 py-3 rounded-xl text-background border border-secondary transition hover:border-background focus:border-background focus:outline focus:outline-2 focus:outline-background"
           >
-          <input type="password" name="password" placeholder="Password"
+          <input v-model="form.data.password"
+            type="password"
+            name="password"
+            placeholder="Password"
             class="px-4 py-3 rounded-xl text-background border border-secondary transition hover:border-background focus:border-background focus:outline focus:outline-2 focus:outline-background"
           >
 
