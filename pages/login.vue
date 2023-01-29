@@ -1,4 +1,9 @@
 <script setup lang="ts">
+const { data } = await useFetch('/api/login')
+
+onMounted(() => {
+  console.log(data.value)
+})
 </script>
 
 <template>
