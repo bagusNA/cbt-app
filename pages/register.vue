@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { RegisterForm } from '~~/composables/auth/useAuth';
+
 definePageMeta({
   layout: 'auth'
 })
+
+const { register } = useAuth()
 
 const form = reactive({
   data: {
@@ -9,7 +13,7 @@ const form = reactive({
     username: '',
     password: '',
     confirmPassword: ''
-  },
+  } as RegisterForm,
   error: '',
   pending: false,
 })
@@ -19,10 +23,7 @@ const submit = async () => {
     form.error = ''
     form.pending = true
 
-    await useFetch('/api/register', {
-      method: 'POST',
-      body: { ...form.data }
-    })
+    await register(form.data)
   }
   catch (error: any) {
     console.error(error)
@@ -44,8 +45,6 @@ const submit = async () => {
       <Icon name="ph:star-four-fill" class="text-4xl absolute top-8 -left-14 animate-fade" />
     </div>
 
-    <div>{{ form.error }}</div>
-    
     <form @submit.prevent="submit" class="flex flex-col gap-y-4">
       <input v-model="form.data.name"
         type="text"

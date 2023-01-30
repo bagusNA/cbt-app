@@ -44,7 +44,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const config = useRuntimeConfig()
-  const token = jwt.sign({ id: user.id, username: user.username }, config.jwtKey, {
+  const { password: _password, ...userWithoutPassword} = user
+  const token = jwt.sign({ ...userWithoutPassword }, config.jwtKey, {
     expiresIn: config.jwtExpiresIn,
   })
 
@@ -56,7 +57,7 @@ export default defineEventHandler(async (event) => {
   })
 
   return {
-    user: user,
+    user: userWithoutPassword,
     message: 'Hello'
   }
 })

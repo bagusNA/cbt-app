@@ -1,11 +1,5 @@
+import { RegisterForm } from "~~/composables/auth/useAuth"
 import { usePrisma } from "~~/composables/usePrisma"
-
-interface RequestBody {
-  name: string
-  username: string
-  password: string,
-  confirmPassword: string
-}
 
 export default defineEventHandler(async (event) => {
   const { 
@@ -13,7 +7,7 @@ export default defineEventHandler(async (event) => {
     username,
     password,
     confirmPassword
-  } = await readBody<RequestBody>(event)
+  } = await readBody<RegisterForm>(event)
 
   if (!name || !username || !password || !confirmPassword)
     return createError({
@@ -47,11 +41,11 @@ export default defineEventHandler(async (event) => {
     }
   })
 
+  const { password: _password, ...userWithoutPassword} = user
+
   return {
     status: 'OK',
     message: 'Registered succesfully!',
-    data: {
-      user
-    }
+    user: userWithoutPassword
   }
 })

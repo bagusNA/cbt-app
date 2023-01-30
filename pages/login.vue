@@ -3,6 +3,8 @@ definePageMeta({
   layout: 'auth'
 })
 
+const { login } = useAuth()
+
 const form = reactive({
   data: {
     username: '',
@@ -17,10 +19,7 @@ const submit = async () => {
     form.error = ''
     form.pending = true
 
-    await useFetch('/api/login', {
-      method: 'POST',
-      body: {...form.data}
-    })
+    await login(form.data.username, form.data.password)
   }
   catch (error: any) {
     console.error(error)
