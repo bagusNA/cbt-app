@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     jwtKey: 'mykey',
-    jwtExpiresIn: 7200
+    jwtExpiresIn: 7200,
+    tokenCookieName: '__session'
   },
   app: {
     pageTransition: {

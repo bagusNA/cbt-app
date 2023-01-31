@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     expiresIn: config.jwtExpiresIn,
   })
 
-  setCookie(event, 'token', token, {
+  setCookie(event, config.tokenCookieName, token, {
     httpOnly: true,
     sameSite: 'strict',
     path: '/',

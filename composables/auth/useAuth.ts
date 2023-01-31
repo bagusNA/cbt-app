@@ -1,3 +1,4 @@
+import auth from "~~/server/middleware/auth"
 import { useAuthUser } from "./useAuthUser"
 
 export interface RegisterForm {
@@ -35,9 +36,29 @@ export const useAuth = () => {
     return authUser
   }
 
+  const refreshAuth = async () => {
+    if (!authUser.value) {
+      try {
+        const { data } = await useFetch('/api/refresh-auth', {
+          headers: useRequestHeaders(['cookie']) as HeadersInit,
+        })
+
+        authUser.value = data.value?.user
+      }
+      catch (error) {
+        const config = useRuntimeConfig()
+        const cookie = useCookie(config.tokenCookieName)
+        cookie.value = null
+      }
+    }
+
+    return authUser
+  }
+
   return {
     user: authUser,
     login,
     register,
+    refreshAuth
   }
 }
