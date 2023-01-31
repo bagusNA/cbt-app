@@ -35,6 +35,28 @@ export const useAuth = () => {
     return authUser
   }
 
+  const logout = async () => {
+    if (!authUser.value)
+      return false;
+    
+    try {
+      await useFetch('/api/auth/logout', {
+        method: 'POST',
+        headers: useRequestHeaders(['cookie']) as HeadersInit
+      })
+
+      const config = useRuntimeConfig()
+      const cookie = useCookie(config.tokenCookieName)
+      cookie.value = null
+      authUser.value = null
+
+      navigateTo({ name: 'login' })
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
   const refreshAuth = async () => {
     if (!authUser.value) {
       try {
@@ -57,6 +79,7 @@ export const useAuth = () => {
   return {
     user: authUser,
     login,
+    logout,
     register,
     refreshAuth
   }

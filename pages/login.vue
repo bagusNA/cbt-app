@@ -20,6 +20,8 @@ const submit = async () => {
     form.pending = true
 
     await login(form.data.username, form.data.password)
+    
+    navigateTo({ name: 'index' })
   }
   catch (error: any) {
     console.error(error)
