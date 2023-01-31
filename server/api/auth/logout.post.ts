@@ -1,5 +1,6 @@
 export default defineEventHandler((event) => {
-  const token = getCookie(event, 'token')
+  const cookieName = useRuntimeConfig().tokenCookieName
+  const token = getCookie(event, cookieName)
 
   if (!token)
     return createError({
@@ -7,7 +8,7 @@ export default defineEventHandler((event) => {
       message: 'Invalid token!'
     })
 
-  deleteCookie(event, 'token')
+  deleteCookie(event, cookieName)
 
   return {
     status: 'OK',

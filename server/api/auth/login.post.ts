@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { usePrisma } from "~~/composables/usePrisma"
-import { verify } from "../utils/password"
+import { verify } from "../../utils/password"
 
 interface RequestBody {
   username: string

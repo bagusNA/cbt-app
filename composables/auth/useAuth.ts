@@ -1,4 +1,3 @@
-import auth from "~~/server/middleware/auth"
 import { useAuthUser } from "./useAuthUser"
 
 export interface RegisterForm {
@@ -12,7 +11,7 @@ export const useAuth = () => {
   const authUser = useAuthUser()
 
   const login = async (username: string, password: string) => {
-    const { data } = await useFetch('/api/login', {
+    const { data } = await useFetch('/api/auth/login', {
       method: 'POST',
       body: {
         username,
@@ -26,7 +25,7 @@ export const useAuth = () => {
   }
 
   const register = async (form: RegisterForm) => {
-    const { data } = await useFetch('/api/register', {
+    const { data } = await useFetch('/api/auth/register', {
       method: 'POST',
       body: { ...form }
     })
@@ -39,7 +38,7 @@ export const useAuth = () => {
   const refreshAuth = async () => {
     if (!authUser.value) {
       try {
-        const { data } = await useFetch('/api/refresh-auth', {
+        const { data } = await useFetch('/api/auth/refresh-auth', {
           headers: useRequestHeaders(['cookie']) as HeadersInit,
         })
 
