@@ -2,7 +2,8 @@
 import { RegisterForm } from '~~/composables/auth/useAuth';
 
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  middleware: 'guest-only'
 })
 
 const { register } = useAuth()
